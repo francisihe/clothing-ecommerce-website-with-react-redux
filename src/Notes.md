@@ -57,3 +57,65 @@ Refer to the code sample above, the <Navigation /> component will have the <Outl
 </Link>
 
 19. Create your Navigation component, include the logo, logo image, do proper linking to home page, add links in the navigation bar
+
+
+// Firebase Authentication Addition
+
+1.  Go to Firebase console, create a new project
+2.  Install firebase library using 'npm add firebase' in your project folder
+3.  Create authentication page route. Add the route in your App file, also add navigation link to app
+4.  Create 'Utils' folder in src folder
+5.  Within utils, create firebase folder, with firebase.js (or firebase.utils.js) file
+6.  To make use of firebase authentication, we need to import sthings from its app suite 'firebase/app'
+7.  Import { initializeApp } from 'firebase/app'
+8.  Within Firebase console, navigate to the 'web' of your app, give it a nickname, click register app.
+9.  Copy the configuration details into your firebase file
+10. Next, import the authentication library and the needed methods
+
+`
+import { 
+    getAuth,
+    signInWithRedirect,
+    signInWithPopup,
+    GoogleAuthProvider
+ } from "firebase/auth";
+`
+
+11. To use Google's auth service, initialize it as a provier: const provider = new GoogleAuthProvider();
+
+12. Set custom parameters to be sent with the request:
+`
+provider.setCustomParameters({
+  'login_hint': 'user@example.com'
+  prompt: "select_account"
+});
+`
+
+In this case, it is set to 'prompt: "select_account"' to prompt the user to select an account
+
+13. After initializing the provider, export the codes. Note that the const Google Popup is a custom name. The regular is the function being run witin 
+`
+xport const auth = getAuth();
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+`
+
+14. Navigate to Firebase authentication menu, select the sign-in providers needed. In this case, Google first.
+
+15. In our authentication component, we import the methods we need/exported such as 'signInWithGooglePopup'
+
+16. To make use of the Firestore database, we go to the Firebase console, create a database, select production, select a location and enable.
+
+Navigate to "Rules" and change false to true below and save changes:
+
+`
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false; //this should be changed to true
+    }
+  }
+}
+`
+
+17. In our firebase utils file, we also import some methods from 'firebase/firestore'
