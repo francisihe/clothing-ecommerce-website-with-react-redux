@@ -64,6 +64,7 @@ provider.setCustomParameters({
 // We export auth here and created a custom name for Google Provider that runs the popup function that's already available in firebase
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 
 // We set the database to access the Firestore database
 // Initialize Cloud Firestore and get a reference to the service

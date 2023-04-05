@@ -118,4 +118,10 @@ service cloud.firestore {
 }
 `
 
-17. In our firebase utils file, we also import some methods from 'firebase/firestore'
+17. In our firebase utils file, we also import some methods from 'firebase/firestore'. These include getFirestore, doc (allows you instantiate a document), getDoc (allows you to access the data in a document) and setDoc (allows you set the data in a documment) method. 
+
+18. After writing the code to allow you create user if user doesn't exist, and simply return the user's details if the user exists.
+
+19. In the authentication file, we called both functions to allow the prompt for signing in/signing up the user and creating a new user if it doesn't exist.
+
+20. 
