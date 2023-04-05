@@ -4,6 +4,7 @@ import {
     getAuth,
     signInWithRedirect,
     signInWithPopup,
+    createUserWithEmailAndPassword,
     GoogleAuthProvider
  } from "firebase/auth";
  import {
@@ -74,7 +75,15 @@ export const db = getFirestore();
 // It creates a user with a unique id (uid in this case, as seen in the user object generated in the console) 
 // Basically, for eachUser, create a new user using eachUser.uid as though you were mapping. Also export it for use
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+    userAuth, 
+    additionalInformation = {}
+    ) => {
+    
+    // Receives the user details, and additional Information if any (such as display name on signup form) etc as an object
+    //if no userAuth, don't run
+    if (!userAuth) return;
+    
     const userDocRef = doc(db, 'users', userAuth.uid);
 
     //SnapShot is basically to check the existence of a data (user in this case)
@@ -90,7 +99,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation //passes in any additional information received
             })
         } catch (error) {
             //display the error and error message
@@ -102,4 +112,15 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     //the if statement above will return true so we'll just return the user 
 
     return userDocRef;
+}
+
+// Here we create define our function with our custom name which calls the already defined function
+// within firebase to enable creating a user with email and password
+
+export const createNewUserWithEmailAndPassword = async (email, password) => {
+    //if no email or password received, doesn't run
+    if (!email || !password) return;
+
+    //calls the defined Google method which receives auth, email and password
+    return await createUserWithEmailAndPassword(auth, email, password);
 }

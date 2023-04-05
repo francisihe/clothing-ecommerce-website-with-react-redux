@@ -145,4 +145,18 @@ Import {useEffect} from react, import {gerRedirectResult} from 'firebase/auth', 
     }, [])
 `
 
-22. 
+22. To enable the native Email/Password option to allow us use sign in/sign up forms, go to the firebase console, turn on the Email/Password option.
+
+23. Create your sign up component with your form within it. Within yout form component, don't forget to instantiate your form with useState. Create an object with empty strings for the default values. Ensure the 'name' for each input matches the same name in the default object.
+
+24. Import the createUserWithEmailAndPassword from 'firebase/auth' inside the util file. Create the handleSubmit function which takes in the created email and password, and sends it to the database by calling the createUserDocumentFromAuth() function with user passed in.
+
+Note that when creating with email and password, you need to also pass a display name. Minor changes were made to the User Document Creation Function in utils to also pass in "additionalInformation" as an object when creating a user. This helps the displayName to be passed as well to the database
+
+25. Moved the individual form inputs in the sign up form into a form-input component instead, and displaying form input components while passing in the appropriate props. This is to help with better styling and passing less or more props for where i will use the same form input for the sign in component to be created.
+
+26. Apply appropriate styling necessary to the form and form input components. Next, make a button component since it is used in multiple places with different and similar styles. Import the button component into the form input componenet. 
+
+NOTE: Do not forget to indicate the 'type' within the button which is inside the form. Usually, any button within a form has default type of submit which sends the form content to a server or backend or database. Now that we have the button as a component, we need to clearly indicate the type as "submit". If it were a regular button anywhere else but within a form, we indicate the type as "button"
+
+27. 
