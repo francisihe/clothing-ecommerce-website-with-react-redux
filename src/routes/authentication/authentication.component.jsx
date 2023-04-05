@@ -6,6 +6,7 @@ import {
     createUserDocumentFromAuth,
     signInWithGoogleRedirect
 } from '../../utils/firebase/firebase.utils'
+import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
 
 
 
@@ -36,6 +37,9 @@ function authentication() {
     return (
         <div>
             <p>Sign In Page</p>
+
+            <SignUpForm />
+
             <button onClick={logGoogleUser}>
                 Sign in with Google Popups
             </button>

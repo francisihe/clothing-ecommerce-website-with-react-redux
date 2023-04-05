@@ -124,4 +124,25 @@ service cloud.firestore {
 
 19. In the authentication file, we called both functions to allow the prompt for signing in/signing up the user and creating a new user if it doesn't exist.
 
-20. 
+20. NOTE: When implementing the GoogleSignin using redirect, with the use of useEffect, note that you cannot directly use async in the useEffect's function. Instead, create another named function within the useEffect function, place your code inside, and then call the same function again to enable the code run when it mounts and remounts.
+
+Import {useEffect} from react, import {gerRedirectResult} from 'firebase/auth', import the {signInWithGoogleRedirect, auth} from the firebase utils file.
+
+`
+// This runs when the app mounts for signing in with redirect
+    useEffect( () => {
+        //Created an async function to get the auth result, then userDocRef calls 
+        //for user to be created from the user object in the response
+        const logGoogleUserWithRedirect = async () => {
+                const response = await getRedirectResult(auth); //
+                
+                if (response) {
+                    const userDocRef = await createUserDocumentFromAuth(response.user)
+                }
+            }
+        //call the function (itself) above. This calls on initial mount and on reload
+        logGoogleUserWithRedirect()
+    }, [])
+`
+
+22. 
