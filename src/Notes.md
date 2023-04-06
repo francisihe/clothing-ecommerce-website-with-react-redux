@@ -159,4 +159,6 @@ Note that when creating with email and password, you need to also pass a display
 
 NOTE: Do not forget to indicate the 'type' within the button which is inside the form. Usually, any button within a form has default type of submit which sends the form content to a server or backend or database. Now that we have the button as a component, we need to clearly indicate the type as "submit". If it were a regular button anywhere else but within a form, we indicate the type as "button"
 
-27. 
+27. Create the sign in component as well as use the appropriate authentication functions from the firebase utils file. Check the "notes on authentication" within the firebase folder for some direction on Google Login and Sign Up using pop up and redirect
+
+28. 

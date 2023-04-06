@@ -1,59 +1,20 @@
-import { useEffect } from 'react'
-import { getRedirectResult } from "firebase/auth"
-import { 
-    auth,
-    signInWithGooglePopup,
-    createUserDocumentFromAuth,
-    signInWithGoogleRedirect
-} from '../../utils/firebase/firebase.utils'
+// import { useEffect } from 'react'
+// import { getRedirectResult } from "firebase/auth"
+
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
-
-
+import SignInForm from '../../components/sign-in-form/sign-in-form-component';
+import '../authentication/authentication.styles.scss'
 
 function authentication() {
-
-    const logGoogleUser = async () => {
-        const { user } = await signInWithGooglePopup(); //deconstructed user from the object usually returned when the method is called
-        const userDocRef = await createUserDocumentFromAuth(user)
-    }
-    
-    // This runs when the app mounts for signing in with redirect
-    useEffect( () => {
-        //Created an async function to get the auth result, then userDocRef calls 
-        //for user to be created from the user object in the response
-        const logGoogleUserWithRedirect = async () => {
-                const response = await getRedirectResult(auth); //
-                
-                if (response) {
-                    const userDocRef = await createUserDocumentFromAuth(response.user)
-                }
-            }
-        //call the function (itself) above. This calls on initial mount and on reload
-        logGoogleUserWithRedirect()
-    }, [])
-    
-
     
     return (
-        <div>
-            <p>Sign In Page</p>
-
-            <SignUpForm />
-
-            <button onClick={logGoogleUser}>
-                Sign in with Google Popups
-            </button>
-            
-            {<br />}
-            {<br />}
-            Optional sign-in method
-            <div>
-                <button onClick={signInWithGoogleRedirect}>
-                    Sign in with Google Redirect
-                </button>
-            </div>
+        <div className='authentication-container'>
+            <SignInForm />
+            <SignUpForm />  
         </div>
-    )
-}
+    );
+};
 
-export default authentication
+export default authentication;
+
+//Moved the sign in with google popup into the sign up form component
