@@ -147,3 +147,4 @@ I moved the sign in with google function from the sign up page to the sign in pa
 Brought in the function as well so the button calls in when clicked
 */
 
+// Authentication using User Context to be added shortly

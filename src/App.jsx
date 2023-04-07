@@ -7,7 +7,7 @@ import Authentication from './routes/authentication/authentication.component.jsx
 function Shop() {
   return (
     <div>
-      <p>Shop page</p>
+      <p>Shop page...</p>
     </div>
   )
 }
