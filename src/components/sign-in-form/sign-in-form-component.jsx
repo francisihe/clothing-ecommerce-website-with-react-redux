@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 //import { createNewUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
 import { getRedirectResult  } from 'firebase/auth'
 import { 
@@ -9,6 +9,8 @@ import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import './sign-in-form.styles.scss'
 import '../button/button.styles.scss'
+
+import { UserContext } from '../../contexts/user.context';
 
 /* 
 ATTENTION AND NOTE TO SELF:
@@ -30,6 +32,12 @@ function SignInForm() {
 
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+
+    // Here we pass in the currentUser and setCurrentUser in the UserContext we imported which holds the values
+    // We then deconstruct it to setCurrentUser. So that when the handleSumbit function in the form runs, and the user is created
+    // The setCurrentUser(user) function within handleSubmit runs, and the user is passed here.
+    // Thereby also passing it to the UserContext file which holds the data to be available everywhere else.
+    const { setCurrentUser } = useContext(UserContext);
     
     //Function to handle changes in the form input
     function handleChange(event) {
@@ -39,7 +47,8 @@ function SignInForm() {
 
     //Function that handles signing in with Google Popup
     const signInGoogleUser = async () => {
-        await signInWithGooglePopup();
+        const { user } = await signInWithGooglePopup();
+        setCurrentUser(user);
     }
         
 
@@ -54,8 +63,10 @@ function SignInForm() {
         event.preventDefault();
        
        try {
-            await signUserInWithEmailAndPassword(email, password);
-            clearForm()
+            // added the user object while trying the user context usage
+            const {user} = await signUserInWithEmailAndPassword(email, password);
+            setCurrentUser(user); //This passes the user object to the UserContext
+            clearForm();
 
        } catch(error) {
             if (error.code == 'auth/email-already-in-use') {

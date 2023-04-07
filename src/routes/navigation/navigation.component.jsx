@@ -1,11 +1,22 @@
-import { Fragment } from 'react';
-import { Outlet, Link } from 'react-router-dom'
+import { Fragment, useContext } from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { UserContext } from '../../contexts/user.context.jsx'
 
+import { signUserOut } from '../../utils/firebase/firebase.utils'
 //import { ReactComponent as Logo } from '../../assets/crown.svg'
 import '../navigation/navigation.styles.scss'
 import logo from '../../assets/crown.svg'
 
 function Navigation() {
+    // We imported the value of the currentUser from the User Context file
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+    
+    //Function to handle signing out
+    const signOutHandler = async () => {
+        await signUserOut();
+        setCurrentUser(null);
+    }
+
     return(
         <Fragment>
             <div className='navigation'>
@@ -18,9 +29,17 @@ function Navigation() {
                         SHOP
                     </Link>
 
-                    <Link className='nav-link' to='/authentication'>
-                        SIGN IN
-                    </Link>
+                    {/* Basically, if we have a current user, gotten from UserContext, display sign out, else display sign in */}
+                    
+                    { currentUser 
+                        ? (<span className='nav-link' onClick={signOutHandler}> SIGN OUT </span>)
+                        : (
+                            <Link className='nav-link' to='/authentication'>
+                                SIGN IN
+                            </Link>
+                        )
+                    }
+                    
                 </div>
             </div>
             <Outlet />

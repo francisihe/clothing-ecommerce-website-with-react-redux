@@ -161,4 +161,25 @@ NOTE: Do not forget to indicate the 'type' within the button which is inside the
 
 27. Create the sign in component as well as use the appropriate authentication functions from the firebase utils file. Check the "notes on authentication" within the firebase folder for some direction on Google Login and Sign Up using pop up and redirect
 
-28. 
+
+// User Context 
+
+1.  Context is sort of a component that holds data for use at almost any level in your app without needing to "prop drill" through different components. Context is like a storage place except it is a component that wraps around all your components that need access to context. It exclusively stores things
+
+In this case, we'll see how we use UserProvider, a context, to wrap our <App />
+
+2.  Create a "contexts" folder in your src folder. Create a "user components" jsx file within it.
+
+3.  In the user.context.jsx file, import {createContent} from react, and export the UserProvider. Wrap the App component with the UserProvider. (check the usercontext file for more comments)
+
+4.  In the sign in form, where we need to initially validate if a user is signed in or not, we capture the user object when a user signs in within the sign in component. 
+We then import '{useContext}' from react as well as import the {UserContext} from our user.context.jsx. A function "setUserContext(user)" runs when a new user attempts sign in and is created, and then sent to the User Context file. 
+
+5.  We also want to be able to access the current state of the user (user value only, not the setter function) in the navigation panel so we import {useContext} from react and also import the {UserContext} from the user context file. 
+
+We then get the value of the current user using:
+const { currentUser } = useContext(UserContext);
+
+6.  We also want to use similar in our Sign Up component, so as to authenticate the user and store the user value on sign up. 
+
+7.  For both our sign in and sign up forms, we executed conditional rendering of the "sign in" link, such that when signed in, it displays 'sign out' and vice versa

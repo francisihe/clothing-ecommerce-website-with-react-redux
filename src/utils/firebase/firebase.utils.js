@@ -6,7 +6,8 @@ import {
     signInWithPopup,
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signOut
  } from "firebase/auth";
  import {
     getFirestore,
@@ -77,8 +78,8 @@ export const db = getFirestore();
 // Basically, for eachUser, create a new user using eachUser.uid as though you were mapping. Also export it for use
 
 export const createUserDocumentFromAuth = async (
-    userAuth, 
-    additionalInformation = {}
+        userAuth, 
+        additionalInformation = {}
     ) => {
     
     // Receives the user details, and additional Information if any (such as display name on signup form) etc as an object
@@ -135,3 +136,6 @@ export const signUserInWithEmailAndPassword = async (email, password) => {
     //calls the defined Google method which receives auth, email and password
     return await signInWithEmailAndPassword(auth, email, password);
 }
+
+// Sign out a user
+export const signUserOut = async () => await signOut(auth);
