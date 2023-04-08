@@ -183,3 +183,5 @@ const { currentUser } = useContext(UserContext);
 6.  We also want to use similar in our Sign Up component, so as to authenticate the user and store the user value on sign up. 
 
 7.  For both our sign in and sign up forms, we executed conditional rendering of the "sign in" link, such that when signed in, it displays 'sign out' and vice versa
+
+8.  Moved User context functions within sign in and sign up forms to authentication. 
