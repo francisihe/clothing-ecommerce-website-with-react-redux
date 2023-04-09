@@ -184,4 +184,5 @@ const { currentUser } = useContext(UserContext);
 
 7.  For both our sign in and sign up forms, we executed conditional rendering of the "sign in" link, such that when signed in, it displays 'sign out' and vice versa
 
-8.  Moved User context functions within sign in and sign up forms to authentication. 
+8.  Moved User context functions within sign in and sign up forms to authentication. Here the 'onAuthStateChanged' from firebase is utilized. We removed them from the forms since Google's method handles this better, and prevents us from having to rerun the functions within the sign in and sign up needlessly on every auth change, meaning better performance
+

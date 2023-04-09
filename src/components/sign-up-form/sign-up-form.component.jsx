@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { createNewUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
-import { UserContext } from '../../contexts/user.context'
+// import { UserContext } from '../../contexts/user.context'
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import './sign-up-form.styles.scss'
@@ -22,7 +22,8 @@ function SignUpForm() {
 
     // Bringing in the setCurrentUser from UserContext. Below we then send the user object details
     // on sign up attempt to the current user by calling the setCurrentUser() function
-    const { setCurrentUser } = useContext(UserContext);
+        // // --removed, now uses onAuthChangeListener
+    // const { setCurrentUser } = useContext(UserContext);
 
     //Function to handle changes in the form input
     function handleChange(event) {
@@ -50,7 +51,7 @@ function SignUpForm() {
                 password
             );
 
-            setCurrentUser(user);
+            // setCurrentUser(user);    // --removed, now uses onAuthChangeListener
 
             await createUserDocumentFromAuth(user, { displayName });
             clearForm();

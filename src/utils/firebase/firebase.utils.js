@@ -7,7 +7,8 @@ import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    onAuthStateChanged
  } from "firebase/auth";
  import {
     getFirestore,
@@ -139,3 +140,10 @@ export const signUserInWithEmailAndPassword = async (email, password) => {
 
 // Sign out a user
 export const signUserOut = async () => await signOut(auth);
+
+// Function to monitor changes to auth for user sign ins and outs
+// -- the callback is self defined, it runs when the auth changes
+// -- note than this permanenently listens, and therefore can be a memory leak. Therefore, after it has been used,
+// -- it is important to stop it, using the already defined method "unsubscribe" wherever it is called
+// -- in this case, in the user context file
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)

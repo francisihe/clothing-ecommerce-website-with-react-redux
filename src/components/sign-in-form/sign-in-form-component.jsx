@@ -10,7 +10,9 @@ import Button from '../button/button.component';
 import './sign-in-form.styles.scss'
 import '../button/button.styles.scss'
 
-import { UserContext } from '../../contexts/user.context';
+// -- removed as we now utilize onAuthChangeListener from firebase in user context file
+// import { UserContext } from '../../contexts/user.context';
+
 
 /* 
 ATTENTION AND NOTE TO SELF:
@@ -37,7 +39,8 @@ function SignInForm() {
     // We then deconstruct it to setCurrentUser. So that when the handleSumbit function in the form runs, and the user is created
     // The setCurrentUser(user) function within handleSubmit runs, and the user is passed here.
     // Thereby also passing it to the UserContext file which holds the data to be available everywhere else.
-    const { setCurrentUser } = useContext(UserContext);
+        // -- removed since we no longer use this but the onAuthChangeListener
+    // const { setCurrentUser } = useContext(UserContext);
     
     //Function to handle changes in the form input
     function handleChange(event) {
@@ -47,8 +50,8 @@ function SignInForm() {
 
     //Function that handles signing in with Google Popup
     const signInGoogleUser = async () => {
-        const { user } = await signInWithGooglePopup();
-        setCurrentUser(user);
+        await signInWithGooglePopup();
+        // setCurrentUser(user); --removed and instead now uses onAuthChangeListener
     }
         
 
@@ -65,7 +68,7 @@ function SignInForm() {
        try {
             // added the user object while trying the user context usage
             const {user} = await signUserInWithEmailAndPassword(email, password);
-            setCurrentUser(user); //This passes the user object to the UserContext
+            //setCurrentUser(user); //This passes the user object to the UserContext --removed and instead now uses onAuthChangeListener
             clearForm();
 
        } catch(error) {
