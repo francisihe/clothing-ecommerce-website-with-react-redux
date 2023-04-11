@@ -186,3 +186,36 @@ const { currentUser } = useContext(UserContext);
 
 8.  Moved User context functions within sign in and sign up forms to authentication. Here the 'onAuthStateChanged' from firebase is utilized. We removed them from the forms since Google's method handles this better, and prevents us from having to rerun the functions within the sign in and sign up needlessly on every auth change, meaning better performance
 
+9.  Within the navigation component, we also did the same by removing the setCurrentUser function but we retained the function that allows us check the current user.
+
+
+// Setting Up Shop With Products
+
+1.  I inserted the products data into a shop-data JSON file
+2.  Created the Shop component which renders on the Shop route in the App file
+3.  Recall that to have global access to the products, just as we have global access to the user, we need to create a 'Products Provider'
+
+4.  We created a Products Provider. Similarly, we need to wrap our App component with our Products Provider, just as we wrapped our App component with the User Provider.
+
+Now, recall that we may need to access "users" while dealing with products, so it is important that the Products Provider is nested within the User Provider. So it ends up looking like this:
+
+```
+<React.StrictMode>
+    <BrowserRouter>
+      <UserProvider>
+        <ProductsProvider>
+          <App />
+        </ProductsProvider>
+      </UserProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
+```
+
+5.  In our shop component, instead of directly mapping over the data in the raw data page, we now insert our Products Context and map over that instead. (Recall, the Product Context, now maps over the raw data)
+
+6.  Note that you may run into the error: 
+hmr invalidate /src/contexts/user.context.jsx Could not Fast Refresh. Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+
+This is because the User Context and User Provider export codes are in the same file. They need to be separated and fixed in separate files.
+
+7.  We then create the product card component, and it's style file as well. Added styling to the shop component too.
