@@ -32,7 +32,6 @@ export const UserProvider = ({ children }) => {
                 createUserDocumentFromAuth(user);   //This creates a user, if the user doesn't already exist, especially when they use the Google sign in
             }
             
-            console.log(user)
             setCurrentUser(user); //This sets the user to the object received from firebase if signed in, but sets it to null is signed out as defined above
         })
 

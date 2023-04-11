@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { ProductsContext } from "./products.context";
 
 import PRODUCTS from '../shop-data.json'
@@ -12,7 +12,7 @@ export const ProductsContext = createContext({
 })
 */
 
-export const ProductsProvider = () => {
+export const ProductsProvider = ({children}) => {
     const [products, setProducts] = useState(PRODUCTS);
     const value = { products };
 
