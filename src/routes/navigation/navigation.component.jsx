@@ -1,6 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../../contexts/user.context.jsx'
+import { UserProvider } from '../../contexts/user.provider.jsx';
 
 import { signUserOut } from '../../utils/firebase/firebase.utils'
 //import { ReactComponent as Logo } from '../../assets/crown.svg'

@@ -1,6 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import { createUserDocumentFromAuth, onAuthStateChangedListener, signUserOut } from "../utils/firebase/firebase.utils";
+import { UserContext } from "./user.context";
 
+/*
+
+Moved this UserContext file into its own separate file
 
 // This is the actual content we need that takes in the "default value"
 // It is the actual value we want to access
@@ -9,11 +13,7 @@ export const UserContext = createContext({
     setCurrentUser: () => null
 });
 
-
-
-/*
-
-I disabled everything below here, which is the user provider section. I moved the Provider into its own file to prevent the hmr invalidate and reload error
+*/
 
 // A provider is the actual component. The .provider wraps around any component that needs access to the values
 // The provider below receives the actual value.
@@ -32,6 +32,7 @@ export const UserProvider = ({ children }) => {
                 createUserDocumentFromAuth(user);   //This creates a user, if the user doesn't already exist, especially when they use the Google sign in
             }
             
+            console.log(user)
             setCurrentUser(user); //This sets the user to the object received from firebase if signed in, but sets it to null is signed out as defined above
         })
 
