@@ -1,4 +1,5 @@
-import { CartContext, useState } from "./cart.context";
+import { useState } from "react";
+import { CartContext } from "./cart.context";
 
 export const CartProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);

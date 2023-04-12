@@ -3,7 +3,6 @@ import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../../contexts/user.context.jsx'
 
 import { signUserOut } from '../../utils/firebase/firebase.utils'
-//import { ReactComponent as Logo } from '../../assets/crown.svg'
 import '../navigation/navigation.styles.scss'
 import logo from '../../assets/crown.svg'
 import CartIcon from '../../components/cart-icon/cart-icon.component.jsx';
