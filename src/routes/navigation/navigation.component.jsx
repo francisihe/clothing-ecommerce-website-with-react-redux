@@ -6,6 +6,8 @@ import { signUserOut } from '../../utils/firebase/firebase.utils'
 //import { ReactComponent as Logo } from '../../assets/crown.svg'
 import '../navigation/navigation.styles.scss'
 import logo from '../../assets/crown.svg'
+import CartIcon from '../../components/cart-icon/cart-icon.component.jsx';
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component.jsx';
 
 function Navigation() {
     // We imported the value of the currentUser from the User Context file
@@ -42,8 +44,12 @@ function Navigation() {
                             </Link>
                         )
                     }
+
+                    <CartIcon />
                     
                 </div>
+
+                <CartDropdown />
             </div>
             <Outlet />
         </Fragment>
