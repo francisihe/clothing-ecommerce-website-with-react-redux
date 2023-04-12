@@ -1,6 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../../contexts/user.context.jsx'
+import { CartContext } from '../../contexts/cart.context.jsx';
 
 import { signUserOut } from '../../utils/firebase/firebase.utils'
 import '../navigation/navigation.styles.scss'
@@ -11,6 +12,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 function Navigation() {
     // We imported the value of the currentUser from the User Context file
     const { currentUser } = useContext(UserContext);
+    const { isCartOpen } = useContext(CartContext); // import value of isCartOpen to conditionally render the Cart dropdown component
     
     // --this function was removed since we no longer need to use the setCurrentUser within as we now utilize onAuthCHangeListener
     // --so the sign out button will instead directly call signUserOut to sign out.
@@ -48,7 +50,7 @@ function Navigation() {
                     
                 </div>
 
-                <CartDropdown />
+                { isCartOpen && <CartDropdown />}
             </div>
             <Outlet />
         </Fragment>
