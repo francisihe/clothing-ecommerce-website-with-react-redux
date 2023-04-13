@@ -219,3 +219,7 @@ hmr invalidate /src/contexts/user.context.jsx Could not Fast Refresh. Learn more
 This is because the User Context and User Provider export codes are in the same file. They need to be separated and fixed in separate files.
 
 7.  We then create the product card component, and it's style file as well. Added styling to the shop component too.
+
+8.  
+
+9. 
