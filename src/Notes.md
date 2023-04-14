@@ -284,3 +284,37 @@ const value = { isCartOpen, setIsCartOpen, cartItems, addItemToCart, cartCount }
 
 
 13. Then import the cartCount to the CartIcon component and use the cartCount holder placeholder within
+
+
+
+// Creating the Checkout Page, 
+-- also fixing the link of the checkout button in the cart component
+
+1.  Create a checkout component in the routes folder. Declare a new route in the App file with the checkout path and element.
+
+2.  Within the cart component, there is a checkout button. We want to be able to click that button and navigate to the checkout page as well. Instead of using a "<Link />" we use another react hook "useNavigate" from "react-router-dom"
+
+useNavigate gives us a function useNavigate() 
+
+```
+const navigate = useNavigate()
+
+    // Function that utilizes the navigate above which we use in the onclick for the checkout button
+    const goToCheckoutHandler = () => {
+        navigate('/checkout')
+    }
+```
+
+We then use this for the onClick for our checkout button
+
+3.  We then go ahead to developing our checkout page. Import the useContext hook and CartContext file. We then map over the cartItems and display the items in the cart
+
+4.  To build the quantity function, remember we already have the "addItemToCart" functionality which is in the cart provider file. Note: When using the function, declare it within the hidden callback function as it crashes the app if called directly. Also, do not forget to include the arg 'product' to avoid adding undefined products to the cart.
+
+5.  We then create the function to remove an item from the cart. We first declare the 'removeItemFromCart' function in the context file.
+
+In our cart provider, we then write the helper function 'removeCartItem' which 'removeItemFromCart' calls, with the required cartItem arg
+
+6.  We then created all the necessary headers within the component page, created our 'component-item' components with their respective styling, and imported it into the checkout page.
+
+7.  Went on to write the respective codes for calculating the cartTotal, and deleteItemFromCart using similar steps already described. 
