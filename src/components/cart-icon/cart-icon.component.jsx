@@ -8,6 +8,9 @@ function CartIcon() {
     // imports the current values from Cart Context
     const { isCartOpen, setIsCartOpen } = useContext(CartContext)
 
+    // import value of cartCount
+    const { cartCount } = useContext(CartContext)
+
     // Function to switch the value of isCartOpen to true or false, when clicked
     function toggleIsCartOpen() {
         setIsCartOpen(!isCartOpen)
@@ -16,7 +19,7 @@ function CartIcon() {
     return (
         <div className='cart-icon-container' onClick={toggleIsCartOpen}>
             <img src={ShoppingIcon} className='shopping-icon'/>
-            <span className='item-count'>0</span>
+            <span className='item-count'>{cartCount}</span>
         </div>
     )
 }

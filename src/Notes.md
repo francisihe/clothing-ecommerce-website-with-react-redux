@@ -220,6 +220,67 @@ This is because the User Context and User Provider export codes are in the same 
 
 7.  We then create the product card component, and it's style file as well. Added styling to the shop component too.
 
-8.  
+8.  Created the Cart Icon, created the Cart Dropdown, added their respective styling
 
-9. 
+9.  To enable the cart icon work properly on click, we created the toggle function. This required us to create the isCartOpen and setIsCartOpen state in the cart context file
+
+10.  We created the cart list component which holds the data that'll be displayed on the cart dropdown
+
+11. We moved to creating the cart functionality, that is, when "add to cart" on the product page is clicked, it adds the item to the cart dropdown but if the item already exists, it increases its quantity
+
+This required us adding 'cartItems: [] and 'addItemToCart: () => {}' to the cart context. We then defined the logic in the cart provider file to enable this functionality. 
+
+Study this:
+
+```
+//Helper function to look through the cart, to determine if to add or increase the quantity of already contained product
+const addCartItem = (cartItems, productToAdd) => {
+
+    // check if cartItems already has productToAdd
+    // -- basically says check each item's id, if equal to products id, return boolean
+    const existingCartItem = cartItems.find(
+        (cartItem) => cartItem.id === productToAdd.id
+    );
+
+    // map over the cart items to create a similar array, if it does contain an item, increase quantity by 1, else return existing items in the cart
+    if (existingCartItem) {
+        return cartItems.map((cartItem) => 
+            cartItem.id === productToAdd.id
+                ? {...cartItem, quantity: cartItem.quantity + 1}
+                : cartItem
+        );
+    };
+
+    // return array with modified cartItems with new item in it
+    return [...cartItems, {...productToAdd, quantity: 1}];
+}
+
+```
+
+This below was then added in the provider section, just below where the states are declared:
+
+```
+//The addItemToCart function with the cartItems and productToAdd args are in the context file
+    const addItemToCart = (productToAdd) => {
+        setCartItems(addCartItem(cartItems, productToAdd));
+    }
+```
+
+For every extra function, array, object or boolean defined in the context file, do not forget to expose the values in the value section of the provider. See Cart Context and Cart Provider files for understanding.
+
+
+12. We fix the count in the cart icon. To do this, we add a 'cartCount: 0' to our Cart Context. Then we add the state to the Cart Provider. We then use the useEffect hook in the provider, which is dependent on the cartItems so on change, it recalculates
+
+We utilize the .reduce() method:
+```
+useEffect(() => {
+        const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0)
+        setCartCount(newCartCount);
+    }, [cartItems])
+```
+
+Do not forget to add the cartCount to the values as well
+const value = { isCartOpen, setIsCartOpen, cartItems, addItemToCart, cartCount };
+
+
+13. Then import the cartCount to the CartIcon component and use the cartCount holder placeholder within
