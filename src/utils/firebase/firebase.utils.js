@@ -14,7 +14,11 @@ import {
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs,
  } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -73,6 +77,67 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 // We set the database to access the Firestore database
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore();
+
+// This function helps us add documents to the database. We get a collection ref from firestore, and create documents
+// -- we pass the key (just like users, this for categories)
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+    
+    await batch.commit()
+    //console.log('done')
+
+    // Note that the data could be different, so instead of directly passing in 'title' in the docRef, we could use a third argument, 'field', and then pass in 'field' instead for dynamic data
+    // --those two lines could then be these:
+    /*
+    const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field = 'title')
+    const docRef = doc(collectionRef, object.field.toLowerCase());
+    */
+}
+
+// This function helps us retrieve data already existing in the Firestore database
+// Check the structure of the data below the code block
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+}
+
+/*
+It's supposed to help get this structure for each category:
+
+{
+    hats: {
+        title: 'Hats',
+        items: [
+            {},
+            {}
+        ]
+    },
+    
+    sneakers: {
+        title: 'Sneakers',
+        items: [
+            {},
+            {}
+        ]
+    }
+}
+*/
+
 
 // Referencing the db, we create a user (or user document) in the 'users' collection
 // It creates a user with a unique id (uid in this case, as seen in the user object generated in the console) 

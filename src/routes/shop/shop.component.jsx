@@ -1,29 +1,30 @@
 //import SHOP_DATA from '../../shop-data.json'
 // We now replace this data above with the Products context we created
 
-import { useContext } from "react";
+// import { Fragment, useContext } from "react";
 
-import { ProductsContext } from "../../contexts/products.context";
-import ProductCard from "../../components/product-card/product-card.component";
-import './shop.styles.scss'
+// import { CategoriesContext } from "../../contexts/categories.context";
+// import ProductCard from "../../components/product-card/product-card.component";
+// import './shop.styles.scss'
+// import CategoryPreview from "../../components/category-preview/category-preview.component";
+
+// All the above imports and below objects moved into categories preview component
+
+import { Routes, Route} from 'react-router-dom'
+import CategoriesPreview from "../categories-preview/categories-preview.component";
+import Category from '../category/category.component';
 
 function Shop() {
 
     // We import and use products from products context, and since we're mapping over the products
-    //from here, we replace 'SHOP_DATA' with 'products'
-    const { products } = useContext(ProductsContext);
+    // from here, we replace 'SHOP_DATA' with 'products'
+    // const { categoriesMap } = useContext(CategoriesContext);
 
     return (
-        <div className="products-container">
-            {
-                products.map((product) => (
-                    <ProductCard 
-                        key={product.id}
-                        product={product}
-                    />
-                ))
-            }
-        </div>
+        <Routes>
+            <Route index element={<CategoriesPreview />} />
+            <Route path=":category" element={<Category />} />
+        </Routes>
     );
 };
 
@@ -42,4 +43,56 @@ or deconstruct directly as
             }
 
 
+*/
+
+/*
+    <Fragment key={title}>
+        <h2>{title}</h2>
+        <div className="products-container">
+            {categoriesMap[title].map((product) => (
+                <ProductCard
+                    key={product.id}
+                    product={product}
+                />
+            ))}
+        </div>
+    </Fragment>
+*/
+
+
+/* 
+    
+        This was added to the code above.
+
+        {
+        products.map((product) => (
+            <ProductCard 
+                key={product.id}
+                product={product}
+            />
+        ))
+    
+*/
+
+
+/*
+It's supposed to help get this structure for each category:
+
+{
+    hats: {
+        title: 'Hats',
+        items: [
+            {},
+            {}
+        ]
+    },
+    
+    sneakers: {
+        title: 'Sneakers',
+        items: [
+            {},
+            {}
+        ]
+    }
+}
 */
