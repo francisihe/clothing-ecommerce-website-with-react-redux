@@ -7,11 +7,18 @@ const CategoryPreview = ({ title, products }) => {
 
     return (
         <div className='category-preview-container'>
+            
             <h2>
                 <Link to={title}>
                     <span className='title'>{title.toUpperCase()}</span>
                 </Link>
             </h2>
+
+            <span>
+                <Link>
+                    <span>View Entire Collection In {title.slice(0, 1).toUpperCase()}{title.slice(1)}</span>
+                </Link>
+            </span>
 
             <div className='preview'>
                 {
