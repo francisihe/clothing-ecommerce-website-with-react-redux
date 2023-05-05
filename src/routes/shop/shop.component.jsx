@@ -14,11 +14,29 @@ import { Routes, Route} from 'react-router-dom'
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 import Category from '../category/category.component';
 
+import { useEffect } from 'react';
+import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utils';
+import { setCategoriesMap } from '../../store/categories/category.action';
+import { useDispatch } from 'react-redux';
+
 function Shop() {
 
     // We import and use products from products context, and since we're mapping over the products
     // from here, we replace 'SHOP_DATA' with 'products'
     // const { categoriesMap } = useContext(CategoriesContext);
+
+    const dispatch = useDispatch();
+
+    // This creates/retrieves the necessary categories in Firebase
+    useEffect(() => {
+        const getCategoriesMap = async () => {
+            const categoryMap = await getCategoriesAndDocuments('categories');
+            dispatch(setCategoriesMap(categoryMap));
+        }
+
+        getCategoriesMap();
+    }, [])
+
 
     return (
         <Routes>

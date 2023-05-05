@@ -64,6 +64,20 @@ We get this provider by importing { Provider } from 'react-redux'. We also impor
 
 This is because the entire app requires a current user and the app component loads first. We then ensure our imports and the relative paths are still correct
 
+```
+useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      if (user) {
+        createUserDocumentFromAuth(user);   //This creates a user, if the user doesn't already exist, especially when they use the Google sign in
+      }
+
+      dispatch(setCurrentUser(user)); //This sets the user to the object received from firebase if signed in, but sets it to null is signed out as defined above
+    })
+
+    return unsubscribe;
+  }, [])
+```
+
 We also remove the <UserProvider> wrapping <App /> in the main jsx file
 
 13. Moved quite a number of code around within the user folder. Created the user.action.js file as well.
@@ -79,4 +93,29 @@ We then replace the currentUser with the data from the Redux store using useSele
 
     export const selectCurrentUser = (state) => state.user.currentUser
 
-16. 
+16. Similarly, we create a category folder in our store folder. We then create the action, reducer, selector and types files, and setup their respective boilerplate codes as we did with user
+
+17. The useEffect which was formerly in the categories provider which creates the necessary documents in firebase is also moved to the Shop component which houses the categories preview and categories components. This is because, like the App component, the Shop component loads initially before any lower level component that utilizes that useEffect.
+
+```
+useEffect(() => {
+        const getCategoriesMap = async () => {
+            const categoryMap = await getCategoriesAndDocuments();
+            setCategoriesMap(categoryMap);
+            //console.log(categoryMap);
+        }
+
+        getCategoriesMap();
+    }, [])
+
+```
+
+18. We then remove the references to the CategoriesProvider that wrap the App component. Similarly, any references to the CategoriesContext are removed. We reference this in the CategoryPreview and Category components.
+
+In the category component, we replace the line 1 with line 2 as shown below, making sure to also import useSelector and selectCategoriesMap from their respective locations:
+    // const { categoriesMap } = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCategoriesMap)
+
+Similarly, in category preview component, we do the same as shown below:
+    // const { categoriesMap } = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCategoriesMap);

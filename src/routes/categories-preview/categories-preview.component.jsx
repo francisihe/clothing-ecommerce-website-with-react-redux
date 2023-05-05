@@ -1,13 +1,16 @@
 import { Fragment, useContext } from "react";
 
-import { CategoriesContext } from "../../contexts/categories.context";
+//import { CategoriesContext } from "../../contexts/categories.context";
 import CategoryPreview from "../../components/category-preview/category-preview.component";
+import { useSelector } from "react-redux";
+import { selectCategoriesMap } from "../../store/categories/category.selector";
 
 function CategoriesPreview() {
 
     // We import and use products from products context, and since we're mapping over the products
     //from here, we replace 'SHOP_DATA' with 'products'
-    const { categoriesMap } = useContext(CategoriesContext);
+    // const { categoriesMap } = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCategoriesMap);
 
     return (
         <Fragment>
