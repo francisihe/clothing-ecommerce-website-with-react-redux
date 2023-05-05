@@ -7,19 +7,21 @@ import { CartProvider } from './contexts/cart.provider'
 
 import App from './App'
 import './index.css'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <UserProvider>
+    <Provider store={store}>
+      <BrowserRouter>
         <CategoriesProvider>
           <CartProvider>
             <App />
           </CartProvider>
         </CategoriesProvider>
-      </UserProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 )
